@@ -29,7 +29,7 @@ public interface LongPrimitiveIterator extends SkippingIterator<Long> {
    * @throws java.util.NoSuchElementException
    *           if no more elements exist in the iteration
    */
-  long nextLong();
+  long nextLong();//wxc 2015-4-10:8:39:29 可以借鉴的地方是方法命名上， 体现出LongPrimitive的愿意。
   
   /**
    * @return next {@code long} in iteration without advancing iteration

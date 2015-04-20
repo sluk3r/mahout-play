@@ -20,6 +20,8 @@ package org.apache.mahout.cf.taste.similarity;
 import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
 
+//wxc pro 2015-4-10:18:06:35 这个接口很明确， 计算指定一组Item之间的相似度。
+
 /**
  * <p>
  * Implementations of this interface define a notion of similarity between two items. Implementations should  //wxc pro 2015-02-05 16:22:51 这个notion具体指？

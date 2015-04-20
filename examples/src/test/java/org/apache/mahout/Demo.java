@@ -23,7 +23,7 @@ public class Demo {
 
     @Test
     public void demo() throws IOException, TasteException {
-        DataModel model = new FileDataModel(new File("J:\\code\\openSrc\\mahout-master\\examples\\src\\test\\resources\\dataset.csv"));
+        DataModel model = new FileDataModel(new File("J:\\code\\github\\mahout-play\\examples\\src\\test\\resources\\dataset.csv"));
         UserSimilarity similarity = new PearsonCorrelationSimilarity(model); //wxc pro 2015-02-05 16:42:30 PearsonCorrelationSimilarity也是个ItemSimilarity， 这里只用UserSimilarity接口的特征？
         UserNeighborhood neighborhood = new ThresholdUserNeighborhood(0.1, similarity, model);
 

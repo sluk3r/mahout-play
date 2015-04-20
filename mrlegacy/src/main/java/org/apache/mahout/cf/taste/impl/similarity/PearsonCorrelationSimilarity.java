@@ -57,6 +57,9 @@ import com.google.common.base.Preconditions;
  * For cosine similarity on uncentered data, see {@link UncenteredCosineSimilarity}.
  * </p> 
  */
+//wxc pro 2015-4-17:9:08:17 怎么理解这个 PearsonCorrelation？ 差点看到Person。http://www.statisticshowto.com/what-is-the-pearson-correlation-coefficient/。
+//wxc 2015-4-17:9:15:23  Correlation的定义： a statistic representing how closely two variables co-vary; it can vary from -1 (perfect negative correlation) through 0 (no correlation) to +1 (perfect positive correlation); 又是统计学， 统计这一块是必须要学的。
+//wxc 2015-4-17:9:16:43 本质上是两个人对对Item表达了喜好后， 再借助这个Item反射出两个人是否秉性相近？
 public final class PearsonCorrelationSimilarity extends AbstractSimilarity {
 
   /**
@@ -76,18 +79,18 @@ public final class PearsonCorrelationSimilarity extends AbstractSimilarity {
   
   @Override
   double computeResult(int n, double sumXY, double sumX2, double sumY2, double sumXYdiff2) {
-    if (n == 0) {
-      return Double.NaN;
+    if (n == 0) { //wxc pro 2015-4-17:9:27:07 这个n代表什么意思？
+      return Double.NaN; //wxc 2015-4-17:9:27:17 也是第一次看到这个NaN的使用。
     }
     // Note that sum of X and sum of Y don't appear here since they are assumed to be 0;
-    // the data is assumed to be centered.
-    double denominator = Math.sqrt(sumX2) * Math.sqrt(sumY2);
+    // the data is assumed to be centered. //wxc pro 2015-4-17:9:27:53 这个centered是啥概念？
+    double denominator = Math.sqrt(sumX2) * Math.sqrt(sumY2);  //wxc 2015-4-17:9:28:39  denominator是分母的意思。
     if (denominator == 0.0) {
       // One or both parties has -all- the same ratings;
       // can't really say much similarity under this measure
       return Double.NaN;
     }
-    return sumXY / denominator;
+    return sumXY / denominator; //wxc 2015-4-17:9:29:09 先不太分心理解这个数学原理， 关注在业务上。
   }
   
 }

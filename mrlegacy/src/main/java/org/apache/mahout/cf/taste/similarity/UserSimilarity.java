@@ -19,7 +19,7 @@ package org.apache.mahout.cf.taste.similarity;
 
 import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
-
+//wxc 2015-4-10:17:20:21 这个接口只有两个方法。先混个脸熟吧。
 /**
  * <p>
  * Implementations of this interface define a notion of similarity between two users. Implementations should
@@ -48,11 +48,11 @@ public interface UserSimilarity extends Refreshable { //wxc pro 2015-02-05 16:32
   
   /**
    * <p>
-   * Attaches a {@link PreferenceInferrer} to the {@link UserSimilarity} implementation.
+   * Attaches a {@link PreferenceInferrer} to the {@link UserSimilarity} implementation. //wxc pro 2015-4-10:17:12:27 这个PreferenceInferrer是什么概念？计算时要用到这个？
    * </p>
    * 
    * @param inferrer {@link PreferenceInferrer}
    */
-  void setPreferenceInferrer(PreferenceInferrer inferrer);
+  void setPreferenceInferrer(PreferenceInferrer inferrer);//wxc pro 2015-4-10:17:23:14 接下来的问题是这个方法什么时候调用， 以及这个接口里又定义了哪些东西？顺便看了下，PreferenceInferrer接口里只有一个方法。看ItemSimilarity没有PreferenceInferrer方面的概念，
   
 }

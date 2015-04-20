@@ -20,6 +20,9 @@ package org.apache.mahout.cf.taste.similarity;
 import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
 
+
+//wxc 2015-4-10:17:44:29    Inferrer的意思是“conclude by reasoning”。 看方法的参数， 大概能猜出来核心业务是：针对给定的Item计算针对用户的偏好值。
+
 /**
  * <p>
  * Implementations of this interface compute an inferred preference for a user and an item that the user has

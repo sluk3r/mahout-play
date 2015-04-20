@@ -32,6 +32,7 @@ import com.google.common.base.Preconditions;
  * certain threshold. Similarity is defined by the given {@link UserSimilarity}.
  * </p>
  */
+//wxc pro 2015-4-20:17:09:56 感觉这个Threshold里不用使用DataModel吧， 毕竟只是一个double类型的封装。
 public final class ThresholdUserNeighborhood extends AbstractUserNeighborhood {
   
   private final double threshold;
@@ -69,7 +70,7 @@ public final class ThresholdUserNeighborhood extends AbstractUserNeighborhood {
                                    UserSimilarity userSimilarity,
                                    DataModel dataModel,
                                    double samplingRate) {
-    super(userSimilarity, dataModel, samplingRate);
+    super(userSimilarity, dataModel, samplingRate);//wxc pro 2015-4-20:17:11:20 这个dataModel还是父单里定义的。 这个dataModel在具体使用中怎么个用法？
     Preconditions.checkArgument(!Double.isNaN(threshold), "threshold must not be NaN");
     this.threshold = threshold;
   }
@@ -77,7 +78,7 @@ public final class ThresholdUserNeighborhood extends AbstractUserNeighborhood {
   @Override
   public long[] getUserNeighborhood(long userID) throws TasteException {
     
-    DataModel dataModel = getDataModel();
+    DataModel dataModel = getDataModel(); //wxc 2015-4-20:17:13:00 感觉这个dataModel用参数方式传过来更为合适些。
     FastIDSet neighborhood = new FastIDSet();//wxc pro 2015-02-05 16:47:58 又见这个FastSet， 除ID外还能不能再放别的？是不是Fast只针对ID做的优化?
     LongPrimitiveIterator usersIterable = SamplingLongPrimitiveIterator.maybeWrapIterator(dataModel
         .getUserIDs(), getSamplingRate());
@@ -87,7 +88,7 @@ public final class ThresholdUserNeighborhood extends AbstractUserNeighborhood {
       long otherUserID = usersIterable.next();
       if (userID != otherUserID) {
         double theSimilarity = userSimilarityImpl.userSimilarity(userID, otherUserID);
-        if (!Double.isNaN(theSimilarity) && theSimilarity >= threshold) {
+        if (!Double.isNaN(theSimilarity) && theSimilarity >= threshold) {//wxc 2015-4-20:17:13:49 像个过滤器一样，只有满足条件的才加进来。
           neighborhood.add(otherUserID);
         }
       }

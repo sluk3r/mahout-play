@@ -37,7 +37,8 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  LongPrimitiveIterator getUserIDs() throws TasteException;
+  //wxc 2015-4-10:8:37:36 并没有直接返回一个Long型来， 而是封装成一个Iterator来。 现在的直觉是封装过度。 不过应该是有它内存好处的。
+  LongPrimitiveIterator getUserIDs() throws TasteException; //wxc pro 2015-4-10:8:37:02 这里怎么会抛出Taste异常？ 看了下，除后三个外， 别的方法都抛出这个异常。 异常的设计惯例？
   
   /**
    * @param userID
@@ -48,6 +49,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
+  //wxc  2015-4-10:8:41:34 又是一个封装。 这个封装把Array内置起来， 是不是也透露这个一对多是根基，再往下就是对业务的深刻把握。 体现业务建模的功底。
   PreferenceArray getPreferencesFromUser(long userID) throws TasteException;
   
   /**
@@ -59,7 +61,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  FastIDSet getItemIDsFromUser(long userID) throws TasteException;
+  FastIDSet getItemIDsFromUser(long userID) throws TasteException; //wxc pro 2015-4-10:8:47:18 这个方法跟前面的getPreferencesFromUser有什么区别？
   
   /**
    * @return a {@link LongPrimitiveIterator} of all item IDs in the model, in order
@@ -77,7 +79,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  PreferenceArray getPreferencesForItem(long itemID) throws TasteException;
+  PreferenceArray getPreferencesForItem(long itemID) throws TasteException;//wxc 2015-4-10:8:48:40 Item、Preference和User， 推荐系统的核心。Preference又是User和Item的结合。这样看DataModel并不是仅仅是对Data封装，而已经包含进了Item和Preference的概念。
   
   /**
    * Retrieves the preference value for a single user and item.
@@ -92,10 +94,10 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  Float getPreferenceValue(long userID, long itemID) throws TasteException;
+  Float getPreferenceValue(long userID, long itemID) throws TasteException;//wxc 2015-4-10:8:52:53 应该是针对指定用户和Item看推荐值多大？
 
   /**
-   * Retrieves the time at which a preference value from a user and item was set, if known.
+   * Retrieves the time at which a preference value from a user and item was set, if known. //wxc pro 2015-4-10:8:54:19 set具体指？
    * Time is expressed in the usual way, as a number of milliseconds since the epoch.
    *
    * @param userID user ID for preference in question
@@ -107,7 +109,7 @@ public interface DataModel extends Refreshable, Serializable {
   Long getPreferenceTime(long userID, long itemID) throws TasteException;
   
   /**
-   * @return total number of items known to the model. This is generally the union of all items preferred by
+   * @return total number of items known to the model. This is generally the union of all items preferred by //wxc pro 2015-4-10:8:56:21 为什么这里把preferred特别指出来？
    *         at least one user but could include more.
    * @throws TasteException
    *           if an error occurs while accessing the data
@@ -115,7 +117,7 @@ public interface DataModel extends Refreshable, Serializable {
   int getNumItems() throws TasteException;
   
   /**
-   * @return total number of users known to the model.
+   * @return total number of users known to the model.//wxc pro 2015-4-10:8:57:07 一个跟当前方法没直接关系的问题。 这个数值怎么能反映出来动态的增减？
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
@@ -123,7 +125,7 @@ public interface DataModel extends Refreshable, Serializable {
   
   /**
    * @param itemID item ID to check for
-   * @return the number of users who have expressed a preference for the item
+   * @return the number of users who have expressed a preference for the item //wxc pro 2015-4-10:9:01:26  express了， 这里不考虑express的具体值？
    * @throws TasteException if an error occurs while accessing the data
    */
   int getNumUsersWithPreferenceFor(long itemID) throws TasteException;
@@ -134,7 +136,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @return the number of users who have expressed a preference for the items
    * @throws TasteException if an error occurs while accessing the data
    */
-  int getNumUsersWithPreferenceFor(long itemID1, long itemID2) throws TasteException;
+  int getNumUsersWithPreferenceFor(long itemID1, long itemID2) throws TasteException; //wxc pro 2015-4-10:9:03:14 为什么单独搞一个两个Item的方法？而没有做成一个通用的方法（即指定一组Item）？
   
   /**
    * <p>
@@ -154,7 +156,7 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  void setPreference(long userID, long itemID, float value) throws TasteException;
+  void setPreference(long userID, long itemID, float value) throws TasteException;//wxc pro 2015-4-10:9:04:58 这个方法是在加载时调用？
   
   /**
    * <p>
@@ -172,15 +174,15 @@ public interface DataModel extends Refreshable, Serializable {
    * @throws TasteException
    *           if an error occurs while accessing the data
    */
-  void removePreference(long userID, long itemID) throws TasteException;
+  void removePreference(long userID, long itemID) throws TasteException;//wxc pro 2015-4-10:9:06:21 把已经表达了Pref的User和Item对去掉。 这样的动态增减也就表明了为什么定义LongPrimitiveIterator这样的加载机制，而不是把值直接返回。
 
   /**
    * @return true if this implementation actually stores and returns distinct preference values;
    *  that is, if it is not a 'boolean' DataModel
    */
-  boolean hasPreferenceValues();
+  boolean hasPreferenceValues();//wxc pro 2015-4-10:9:09:38   DataModel有boolean与否之分？
 
-  /**
+  /** //wxc pro 2015-4-10:9:12:36 关于Recommender的这一段完全看不懂。
    * @return the maximum preference value that is possible in the current problem domain being evaluated. For
    * example, if the domain is movie ratings on a scale of 1 to 5, this should be 5. While a
    * {@link org.apache.mahout.cf.taste.recommender.Recommender} may estimate a preference value above 5.0, it
@@ -189,7 +191,7 @@ public interface DataModel extends Refreshable, Serializable {
    * the difference between estimated and actual value, this at least prevents this effect from unfairly
    * penalizing a {@link org.apache.mahout.cf.taste.recommender.Recommender}
    */
-  float getMaxPreference();
+  float getMaxPreference(); //wxc pro 2015-4-10:9:11:58 拿到这个值有什么用？
 
   /**
    * @see #getMaxPreference()

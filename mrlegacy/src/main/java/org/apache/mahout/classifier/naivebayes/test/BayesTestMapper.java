@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  * <p/>
  * The output value is the generated label, the Pair is the expected label and true if they match:
  */
-public class BayesTestMapper extends Mapper<Text, VectorWritable, Text, VectorWritable> {
+public class BayesTestMapper extends Mapper<Text, VectorWritable, Text, VectorWritable> {//wxc 2015-02-15 15:41:48 第一次见MapReduce的Map有子类。
 
   private static final Pattern SLASH = Pattern.compile("/");
 

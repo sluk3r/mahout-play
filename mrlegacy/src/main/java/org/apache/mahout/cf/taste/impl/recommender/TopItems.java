@@ -48,7 +48,7 @@ public final class TopItems {
   
   public static List<RecommendedItem> getTopItems(int howMany,
                                                   LongPrimitiveIterator possibleItemIDs,
-                                                  IDRescorer rescorer,
+                                                  IDRescorer rescorer,//wxc pro 2015-02-15 17:17:13  这是个啥？从名字上来说是重打分。是不是真这个意思？有什么逻辑?
                                                   Estimator<Long> estimator) throws TasteException {
     Preconditions.checkArgument(possibleItemIDs != null, "possibleItemIDs is null");
     Preconditions.checkArgument(estimator != null, "estimator is null");
@@ -57,12 +57,12 @@ public final class TopItems {
       Collections.reverseOrder(ByValueRecommendedItemComparator.getInstance()));//wxc pro 2015-02-06 09:06:04 怎么一个考虑？这里要用一个Queue？
     boolean full = false;
     double lowestTopValue = Double.NEGATIVE_INFINITY;
-    while (possibleItemIDs.hasNext()) {
+    while (possibleItemIDs.hasNext()) {//wxc pro 2015-02-15 16:00:28 整体上怎么个处理逻辑？
       long itemID = possibleItemIDs.next();
       if (rescorer == null || !rescorer.isFiltered(itemID)) {
         double preference;
         try {
-          preference = estimator.estimate(itemID);
+          preference = estimator.estimate(itemID);//wxc pro 2015-02-15 16:31:34 这个estimate怎么产生一个preference， 背后藏着什么逻辑？
         } catch (NoSuchItemException nsie) {
           continue;
         }
