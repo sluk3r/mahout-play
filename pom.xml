@@ -318,7 +318,7 @@
       </dependency>
       <dependency>
         <groupId>org.apache.lucene</groupId>
-        <artifactId>lucene-test-framework</artifactId>
+        <artifactId>lucene-test-framework</artifactId>   <!--wxc 这个test里提供了什么功能？-->
         <version>${lucene.version}</version>
         <scope>test</scope>
       </dependency>
@@ -412,14 +412,14 @@
 
       <dependency>
         <groupId>com.thoughtworks.xstream</groupId>
-        <artifactId>xstream</artifactId>
+        <artifactId>xstream</artifactId>  <!--wxc 这个xstream干啥的？-->
         <version>1.4.4</version>
       </dependency>
 
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>16.0</version>
+        <version>16.0</version>  <!--wxc 也看到这个guava了 -->
       </dependency>
 
       <dependency>
@@ -458,8 +458,8 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
+          <groupId>org.eclipse.m2e</groupId> <!--wxc m2e是Maven到Eclipse转换的插件？-->
+          <artifactId>lifecycle-mapping</artifactId> 
           <version>1.0.0</version>
           <configuration>
             <lifecycleMappingMetadata>
@@ -518,7 +518,7 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-antrun-plugin</artifactId>
+          <artifactId>maven-antrun-plugin</artifactId>  <!--wxc antrun对应的xml文件在哪？ 都什么功能用到了？-->
           <version>1.7</version>
         </plugin>
         <plugin>
@@ -548,7 +548,7 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-eclipse-plugin</artifactId>
+          <artifactId>maven-eclipse-plugin</artifactId> <!--wxc 这个插件跟上面的m2e有什么区别？-->
           <version>2.9</version>
           <configuration>
             <outputDirectory>${eclipse.outputDirectory}</outputDirectory>
@@ -618,7 +618,7 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-failsafe-plugin</artifactId>
+          <artifactId>maven-failsafe-plugin</artifactId> <!--wxc  failsafe插件怎么理解？-->
           <version>${msurefire.version}</version>
         </plugin>
         <plugin>
@@ -638,7 +638,7 @@
         </plugin>
         <plugin>
           <groupId>org.apache.mahout</groupId>
-          <artifactId>mahout-collection-codegen-plugin</artifactId>
+          <artifactId>mahout-collection-codegen-plugin</artifactId>  <!--wxc  这个Maven插件怎么一个codegen？-->
           <version>1.0</version>
         </plugin>
         <plugin>
@@ -652,7 +652,7 @@
           <version>2.15.2</version>
         </plugin>
       </plugins>
-    </pluginManagement>
+    </pluginManagement>  <!--wxc  加不加这个pluginManagement有什么区别？ 是不是加了pluginManagement后， child module里就能用到？-->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -672,7 +672,7 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-remote-resources-plugin</artifactId>
+        <artifactId>maven-remote-resources-plugin</artifactId> <!--wxc  都有哪些remote-resources？怎么个管理？-->
         <inherited>false</inherited>
         <configuration>
           <resourceBundles>
@@ -690,10 +690,10 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
+        <artifactId>maven-checkstyle-plugin</artifactId> <!--wxc 代码风格？-->
         <version>${mcheckstyle.version}</version>
         <dependencies>
-          <dependency>
+          <dependency> <!--wxc plugin 也还可以再加dependency？-->
             <groupId>org.apache.mahout</groupId>
             <artifactId>mahout-buildtools</artifactId>
             <version>${project.version}</version>
@@ -702,7 +702,7 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
+        <artifactId>maven-pmd-plugin</artifactId> <!--wxc 这个pmd插件何用？-->
         <version>${mpmd.version}</version>
         <dependencies>
           <dependency>
@@ -725,12 +725,12 @@
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
+        <artifactId>findbugs-maven-plugin</artifactId> <!--wxc findbugs第一次见用-->
         <version>${mfindbugs.version}</version>
         <dependencies>
           <dependency>
             <groupId>org.apache.mahout</groupId>
-            <artifactId>mahout-buildtools</artifactId>
+            <artifactId>mahout-buildtools</artifactId> <!--wxc findbugs插件出于什么考虑要依赖这个mahout-buildtools? 是mahout-buildtools有针对findbugs的插件？ 这个插件是classpath地扫而发现？ 貌似。 刚确认了下， 这个mahout-buildtoolsjar里只有配置文件， 没有代码文件。 这也是第一次见jar里只压缩配置文件的。-->
             <version>${project.version}</version>
           </dependency>
         </dependencies>
@@ -748,7 +748,7 @@
       </plugin>
       <plugin>
         <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
+        <artifactId>apache-rat-plugin</artifactId> <!--wxc 这个rat插件是做啥的？ -->
         <version>0.10</version>
         <configuration>
           <licenses>
@@ -815,7 +815,7 @@
     </profile>
     <profile>
       <id>fastinstall</id>
-      <properties>
+      <properties> <!--wxc 貌似这个profile就是设置一些环境变量-->
         <skipTests>true</skipTests>
         <pmd.skip>true</pmd.skip>
         <checkstyle.skip>true</checkstyle.skip>
@@ -846,7 +846,7 @@
       </properties>
       <build>
         <plugins>
-          <plugin>
+          <plugin> <!--wxc 再执行这些插件？ -->
             <inherited>true</inherited>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
@@ -877,7 +877,7 @@
           <plugin>
             <inherited>true</inherited>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
+            <artifactId>maven-gpg-plugin</artifactId> <!--wxc gpg插件何用？ -->
             <version>1.4</version>
             <executions>
               <execution>
@@ -986,7 +986,7 @@
       </build>
     </profile>
     <profile>
-      <id>ci</id>
+      <id>ci</id><!--wxc 这个ci是client的缩写？ -->
       <activation>
         <activeByDefault>false</activeByDefault>
         <property>
@@ -1083,7 +1083,7 @@
       <!-- catch code tags -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
-        <artifactId>taglist-maven-plugin</artifactId>
+        <artifactId>taglist-maven-plugin</artifactId> <!--wxc 这个插件不错， 还可以把IDE里常用的TODO tags抓取出来-->
         <version>2.4</version>
         <configuration>
           <tags>
@@ -1111,7 +1111,7 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
+        <artifactId>maven-changes-plugin</artifactId> <!--wxc 这个插件怎么处理changes？ -->
         <version>2.9</version>
         <configuration>
           <onlyCurrentVersion>true</onlyCurrentVersion>
